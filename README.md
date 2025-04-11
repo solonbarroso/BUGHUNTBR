@@ -1,102 +1,109 @@
-# BUGHUNTBR
-Bug bounty com precisão e propósito
+### 🧠 `README.md` para o repositório `BUGHUNTBR`
+
+```markdown
+# 🕷️ BUGHUNTBR
+
+Ferramenta de automação de reconhecimento e testes iniciais para programas de Bug Bounty. Desenvolvida em Python para facilitar a coleta de informações, análise de parâmetros, e detecção rápida de vulnerabilidades como XSS, IDOR, tokens expostos e muito mais.
+
+## ✨ Destaques
+
+- 🔍 Reconhecimento automatizado com subfinder, httpx, gau, waybackurls, gospider
+- ⚔️ Testes de XSS com `qsreplace` + `dalfox`
+- 🔑 Busca por tokens expostos (strings de 20+ caracteres)
+- 🧩 Busca por IDOR (URLs com padrões como `id=`, `user_id=`)
+- 📊 Scanner com Nuclei e suporte a templates
+- ⏱️ Suporte a `--quick` (testes rápidos com 5 entradas)
+- 📉 Controle de requisições com `--rpm` e `--throttle`
+- 📁 Estrutura de saída organizada por domínio
+- ✅ Verificação de dependências com `--check`
 
 ---
 
-## 🐞 BugHuntBR — Reconhecimento para Bug Bounty
-
-`BugHuntBR` é uma ferramenta ofensiva voltada para caçadores de vulnerabilidades em programas de Bug Bounty. Focada em automação com precisão e respeito ao escopo, ela oferece módulos potentes para análise de subdomínios, parâmetros, XSS, IDOR, tokens expostos e muito mais.
-
----
-
-### 🧠 Funcionalidades
-
-- 🔎 **Reconhecimento Completo**: subdomínios, hosts ativos, URLs históricas, crawling, análise de parâmetros.
-- 🧪 **Testes de XSS**: com múltiplos payloads + Dalfox.
-- 🕵️‍♂️ **Detector de IDOR**: variação automática de IDs e parâmetros sensíveis.
-- 🛡️ **Scan com Nuclei**: CVEs, misconfigs, etc.
-- 🔐 **Busca por Tokens/JWTs**: em URLs indexadas.
-- ⚡ **Modo Rápido** (`--quick`): para desenvolvimento e testes rápidos.
-- 📄 **Múltiplos Alvos com Lista** (`--target-file`).
-
----
-
-### 📦 Instalação de Dependências
-
-Use a flag `--check` para instalar todas as ferramentas automaticamente (requer Go):
+## 🚀 Uso
 
 ```bash
-./bughuntbr.py --check
+python3 bughuntbr.py [opções]
+```
+
+### 📌 Exemplo de execução completa:
+```bash
+python3 bughuntbr.py --target teste.com --scan --xss --nuclei --idor --tokenscan --quick --rpm 10 --throttle 2.0
 ```
 
 ---
 
-### 🚀 Uso
+## ⚙️ Opções
 
-```bash
-./bughuntbr.py [OPÇÕES]
-```
-
-#### 🔹 Alvo único
-```bash
-./bughuntbr.py -d example.com --scan --xss --nuclei --idor --tokenscan
-```
-
-#### 🔹 Múltiplos alvos (arquivo `.txt`)
-```bash
-./bughuntbr.py -tf alvos.txt --scan --xss --nuclei
-```
-
-#### 🔹 Modo rápido para testes
-```bash
-./bughuntbr.py -d example.com --scan --quick
-```
+| Flag               | Descrição                                                  |
+|--------------------|------------------------------------------------------------|
+| `--target, -d`     | Domínio alvo (ex: `example.com`)                            |
+| `--target-file, -tf` | Arquivo com lista de domínios (um por linha)             |
+| `--output, -o`     | Diretório de saída (default: `bughunt_output`)             |
+| `--scan`           | Executa reconhecimento completo                            |
+| `--xss`            | Testa XSS com payloads usando Dalfox                       |
+| `--idor`           | Busca padrões comuns de IDOR                               |
+| `--tokenscan`      | Busca tokens ou segredos expostos                          |
+| `--nuclei`         | Executa Nuclei nos hosts ativos                            |
+| `--quick`          | Limita cada fase a 5 entradas para testes rápidos          |
+| `--rpm`            | Limite de requisições por minuto (ex: `--rpm 50`)         |
+| `--throttle`       | Delay entre comandos que fazem requisições (ex: `1.5s`)    |
+| `--check`          | Instala automaticamente as dependências via Go             |
 
 ---
 
-### ⚙️ Opções
+## 🛠️ Ferramentas exigidas
 
-| Flag              | Descrição |
-|-------------------|-----------|
-| `--target, -d`    | Domínio único |
-| `--target-file, -tf` | Arquivo com domínios (1 por linha) |
-| `--output, -o`    | Diretório de saída (default: `bughunt_output`) |
-| `--scan`          | Reconhecimento completo |
-| `--xss`           | Teste de XSS com qsreplace + dalfox |
-| `--idor`          | Busca por IDOR |
-| `--tokenscan`     | Detecta tokens expostos |
-| `--nuclei`        | Executa Nuclei |
-| `--quick`         | Limita a 5 entradas para testes rápidos |
-| `--throttle`      | Delay entre requisições (ex: `--throttle 1.5`) |
-| `--check`         | Instala ferramentas requeridas automaticamente |
+- `subfinder`
+- `httpx`
+- `gau`
+- `waybackurls`
+- `gospider`
+- `qsreplace`
+- `dalfox`
+- `nuclei`
 
+### 📦 Instale com:
+```bash
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install github.com/lc/gau@latest
+go install github.com/tomnomnom/waybackurls@latest
+go install github.com/jaeles-project/gospider@latest
+go install github.com/tomnomnom/qsreplace@latest
+go install github.com/hahwul/dalfox/v2@latest
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+```
+ou
+python3 bughuntbr.py --check
+| `--check`          | Instala automaticamente as dependências via Go             |
 ---
 
-### 📂 Estrutura de Saída
+## 📁 Estrutura de saída
 
 ```
 bughunt_output/
 └── example.com/
-    ├── subs.txt
+    ├── subdomains.txt
     ├── hosts.txt
     ├── urls.txt
-    ├── params_clean.txt
-    ├── params_report.json
-    ├── idor_findings.txt
-    ├── token_exposed.txt
+    ├── xss_<payload>.txt
+    ├── idor.txt
+    ├── tokens.txt
     ├── nuclei_results.txt
-    └── xss_results/
+    └── executado_em.txt
 ```
 
 ---
 
-### 💡 Requisitos
+## 🙌 Contribua
 
-- Linux/macOS
-- Go instalado
-- Ferramentas: subfinder, httpx, gau, waybackurls, gospider, dalfox, nuclei, qsreplace
+Pull requests são bem-vindos! Se encontrar bugs ou quiser propor melhorias, sinta-se à vontade para abrir uma issue.
 
 ---
+
+## 📜 Licença
+
+Este projeto é distribuído sob a licença MIT. 
 
 ### ❤️ Créditos
 
