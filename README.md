@@ -72,10 +72,13 @@ go install github.com/jaeles-project/gospider@latest
 go install github.com/tomnomnom/qsreplace@latest
 go install github.com/hahwul/dalfox/v2@latest
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
-```
+
 ou
+
 python3 bughuntbr.py --check
-| `--check`          | Instala automaticamente as dependências via Go             |
+
+```
+
 ---
 
 ## 📁 Estrutura de saída
